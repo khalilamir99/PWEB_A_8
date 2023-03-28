@@ -18,95 +18,141 @@
     </head>
 
     <body>
-    <div class="sidebar">
-        <div class="logo-details">
-            <img src = "perpus.png" alt="Logo" width="50" height="50" style="margin:0px 5px"></i>
-            <span class="logo_name" style="font-size: 24px;">e-Tugas</span>
+        <div class="sidebar">
+            <div class="logo-details">
+                <img src = "perpus.png" alt="Logo" width="50" height="50" style="margin:0px 5px"></i>
+                <span class="logo_name" style="font-size: 24px;">e-Tugas</span>
+            </div>
+            <ul class="nav-links">
+                <li>
+                <a href="/home">
+                    <i class='bx bx-grid-alt' ></i>
+                    <span class="links_name">Dashboard</span>
+                </a>
+                </li>
+                <li>
+                <a href="/tugas">
+                    <i class='bx bx-book' ></i>
+                    <span class="links_name">Data Tugas</span>
+                </a>
+                </li>
+                <li>
+                <a href="/pendaftaran">
+                    <i class='bx bx-task' ></i>
+                    <span class="links_name">Data Pendaftaran</span>
+                </a>
+                </li>
+                <li class="log_out">
+                <a href="/auth/logout">
+                    <i class='bx bx-log-out'></i>
+                    <span class="links_name">Log out</span>
+                </a>
+                </li>
+            </ul>
         </div>
-        <ul class="nav-links">
-            <li>
-            <a href="/home">
-                <i class='bx bx-grid-alt' ></i>
-                <span class="links_name">Dashboard</span>
-            </a>
-            </li>
-            <li>
-            <a href="/tugas">
-                <i class='bx bx-book' ></i>
-                <span class="links_name">Data Tugas</span>
-            </a>
-            </li>
-            <li>
-            <a href="/pendaftaran">
-                <i class='bx bx-task' ></i>
-                <span class="links_name">Data Pendaftaran</span>
-            </a>
-            </li>
-            <li class="log_out">
-            <a href="/auth/logout">
-                <i class='bx bx-log-out'></i>
-                <span class="links_name">Log out</span>
-            </a>
-            </li>
-        </ul>
-    </div>
 
-    <section class="home-section">
-        <nav>
-            <div class="sidebar-button">
-                <i style="color: rgb(255, 255, 255);" class='bx bx-menu sidebarBtn'></i>
-                <span style="color: rgb(255, 255, 255);" class="dashboard">Profil</span>
+        <section class="home-section">
+            <nav>
+                <div class="sidebar-button">
+                    <i style="color: rgb(255, 255, 255);" class='bx bx-menu sidebarBtn'></i>
+                    <span style="color: rgb(255, 255, 255);" class="dashboard">Profil</span>
+                </div>
+                <div>
+                    <a href="/profil" class="btn btn-light pull-right"> {{ user.name }} </a>
+                </div>
+            </nav>
+                
+            <div class="home-content">
+                <div style="margin-left: 20px; margin-right:20px; margin-top:-20px">
+                    <div class="card" style="padding: 20px;">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4">Detail Profil {{ user.name }}</b></h4>
+                            <form>
+                                <div class="form-outline mb-4 col-md-6" style="text-align:left;">
+                                    <label for="email">Nama Lengkap</label>
+                                    <input type="name" class="form-control" id="name" name="name" value="{{ user.name }}" readonly/>
+                                </div>
+                        
+                                <div class="form-outline mb-4 col-md-6" style="text-align:left;">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" readonly />
+                                </div>
+
+                                <div class="form-outline mb-4 col-md-6" style="text-align:left;">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" value="{{ user.password }}" readonly />                               
+                                </div>
+
+                                {{#if message }}
+                                <p class="alert alert-danger">{{ message }} </p>
+                                {{/if}}
+
+                                <button class="btn btn-outline-dark" type="button" data-toggle="modal"
+                                data-target="#contohModal">Edit Profil</button>
+
+                            </form>    
+                        </div>
+                    </div>  
+                </div>           
             </div>
-            <div>
-                <a href="/profil" class="btn btn-light pull-right"> {{ user.name }} </a>
-            </div>
-        </nav>
-            
-        <div class="home-content">
-            <div style="margin-left: 20px; margin-right:20px; margin-top:-20px">
-                <div class="card" style="padding: 20px;">
-                    <div class="card-body">
-                        <h4 class="card-title mb-4">Detail Profil {{ user.name }}</b></h4>
-                        <form>
-                            <div class="form-outline mb-4 col-md-6" style="text-align:left;">
-                                <label for="email">Nama Lengkap</label>
-                                <input type="name" class="form-control" id="name" name="name" value="{{ user.name }}" readonly/>
+
+            <div class="container">
+                <div class="modal fade" id="contohModal" role="dialog" arialabelledby="modalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Edit Profil</h4>
+                                <button type="button" class="close" data-dismiss="modal"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
+
+                            <div class="modal-body">
+                                <form action="auth/profil" method="POST">
+                                    <div class="form-outline mb-4" style="text-align:left;">
+                                        <label for="email">Nama Lengkap</label>
+                                        <input type="name" class="form-control" id="name" name="name" required />
+                                    </div>
+                                
+                                    <div class="form-outline mb-4" style="text-align:left;">
+                                        <label for="email">Email Address</label>  
+                                        <input type="email" class="form-control" id="email" name="email" required />
+                                    </div>
                     
-                            <div class="form-outline mb-4 col-md-6" style="text-align:left;">
-                                <label for="email">Email Address</label>
-                                <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" readonly />
+                                    <div class="form-outline mb-4" style="text-align:left;">
+                                        <label for="password">Password Sekarang</label>  
+                                        <input type="password" class="form-control" id="password" name="password" required />
+                                    </div>
+                    
+                                    <div class="form-outline mb-4" style="text-align:left;">
+                                        <label for="newPassword">Password Password Baru</label>  
+                                        <input type="password" class="form-control" id="newPassword" name="newPassword" required/>  
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-outline-dark">SIMPAN</button>
+                                    </div>
+                                </form>
                             </div>
-
-                            <div class="form-outline mb-4 col-md-6" style="text-align:left;">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" value="{{ user.password }}" readonly />                               
-                            </div>
-
-                            <button class="btn btn-outline-dark" type="submit">Back</button>
-                            <button class="btn btn-outline-dark" type="submit">Edit Profil</button>
-                            <button class="btn btn-outline-dark" type="submit">Ubah Password</button>
-
-                        </form>    
+                        </div>
                     </div>
-                </div>  
-            </div> 
-            
-        </div>
-    </section>
+                </div>
+            </div>
+        </section>
                   
     
-    <script>
-        let sidebar = document.querySelector(".sidebar");
-        let sidebarBtn = document.querySelector(".sidebarBtn");
-        sidebarBtn.onclick = function() {
-        sidebar.classList.toggle("active");
-        if(sidebar.classList.contains("active")){
-        sidebarBtn.classList.replace("bx-menu" ,"bx-menu-alt-right");
-        }else
-        sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-        }
-    </script>
+        <script>
+            let sidebar = document.querySelector(".sidebar");
+            let sidebarBtn = document.querySelector(".sidebarBtn");
+            sidebarBtn.onclick = function() {
+            sidebar.classList.toggle("active");
+            if(sidebar.classList.contains("active")){
+            sidebarBtn.classList.replace("bx-menu" ,"bx-menu-alt-right");
+            }else
+            sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+            }
+        </script>
 
     </body>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

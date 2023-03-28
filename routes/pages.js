@@ -34,6 +34,18 @@ router.get('/profil', authController.isLoggedIn, ( req, res) => {
     
 });
 
+router.post('/profil', authController.isLoggedIn, authController.updateProfil, ( req, res) => {
+    
+    if( req.user ) {
+      res.render('../view/profil', {
+        user: req.user
+      })
+    }else{
+        res.redirect('/');
+    }
+    
+});
+
 router.get('/tugas', authController.isLoggedIn, ( req, res) => {
     
     if( req.user ) {
