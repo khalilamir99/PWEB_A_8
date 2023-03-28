@@ -96,6 +96,44 @@ exports.login = async (req, res) => {
     }
 };
 
+exports.updateProfil = async (req, res) => {
+  try {
+    const { name, email, password, newPassword } = req.body;
+
+    db.query('SELECT * FROM users WHERE email = ? ', [email], async (error, results) => {
+      console.log(results);
+      if (!results || results.length === 0) {
+        res.status(401).render('../view/profil', {
+          message: 'User not found',
+        });
+      } else if (!(await bcrypt.compare(password, results[0].password))) {
+        res.status(401).render('../view/profil', {
+          message: 'Incorrect password',
+        });
+      } else {
+        let hashedPassword = results[0].password;
+        if (newPassword) {
+          hashedPassword = await bcrypt.hash(newPassword, 8);
+        }
+    
+        db.query('UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?', [name, email, hashedPassword, results[0].id], (error, result) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log(result);
+            return res.render('../view/profil', {
+                message: 'Profile updated'
+            });
+          }
+        });
+      }
+    });
+    
+
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 exports.isLoggedIn = async (req, res, next) => {
     // console.log(req.cookies);
