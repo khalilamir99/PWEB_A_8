@@ -67,10 +67,32 @@ router.get('/pendaftaran', authController.isLoggedIn, ( req, res) => {
     }else{
         res.redirect('/');
     }
+
+  });
+
+router.get('/editpendaftaran', authController.isLoggedIn, ( req, res) => {
+    
+      if( req.user ) {
+        res.render('../view/editpendaftaran', {
+          user: req.user
+        })
+      }else{
+          res.redirect('/');
+      }    
     
 });
 
+router.get('/tambahpendaftaran', authController.isLoggedIn, ( req, res) => {
+    
+  if( req.user ) {
+    res.render('../view/tambahpendaftaran', {
+      user: req.user
+    })
+  }else{
+      res.redirect('/');
+  }
 
+});
 
 module.exports = router;
 
