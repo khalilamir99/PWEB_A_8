@@ -82,10 +82,34 @@ router.get('/editpendaftaran', authController.isLoggedIn, ( req, res) => {
     
 });
 
+router.get('/editTugas', authController.isLoggedIn, ( req, res) => {
+    
+      if( req.user ) {
+        res.render('../view/editTugas', {
+          user: req.user
+        })
+      }else{
+          res.redirect('/');
+      }    
+    
+});
+
 router.get('/tambahpendaftaran', authController.isLoggedIn, ( req, res) => {
     
   if( req.user ) {
     res.render('../view/tambahpendaftaran', {
+      user: req.user
+    })
+  }else{
+      res.redirect('/');
+  }
+
+});
+
+router.get('/tambahTugas', authController.isLoggedIn, ( req, res) => {
+    
+  if( req.user ) {
+    res.render('../view/tambahtugas', {
       user: req.user
     })
   }else{
