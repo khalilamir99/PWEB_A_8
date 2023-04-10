@@ -174,37 +174,3 @@ exports.logout = async (req, res) => {
     res.status(200).redirect('/');
 }
 
-app.get('/form', function (req, res) {
-  const sql = "SELECT * FROM form";
-  db.query(sql, (err,result)=>{
-    const form = JSON.parse(JSON.stringify(result));
-    res.send(form)
-  })
-})
-
-app.get('/tambahForm', function (req, res) {
-  const insertSql = "INSERT INTO form (judul, deskripsi, created_at, updated_at) VALUES (?, ?, now(), now())";
-  db.query(insertSql,['Tugas PWeb','Buatlah query untuk melakukan update'], (err,rows,result)=>{
-     
-  let response = {
-    msg : "Data berhasil ditambahkan",
-    lastId : rows.insertId,
-    error : err
-  }
-  res.send(response);
-  })
-  
-})
-
-app.get('/editForm', function (req, res) {
-  db.query('UPDATE form SET judul = ?, deskripsi = ?, password = ? WHERE id = ?', [judul, deskripsi], (error, result) => {
-     
-  let response = {
-    msg : "Data berhasil diedit",
-    lastId : rows.insertId,
-    error : err
-  }
-  res.send(response);
-  })
-  
-})
