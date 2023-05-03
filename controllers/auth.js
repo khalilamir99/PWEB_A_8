@@ -23,11 +23,11 @@ exports.register = (req, res) => {
 
         if( result.length > 0 ) {
             return res.render('../view/register', {
-                message: 'That Email is already in use'
+                message: 'Email telah digunakan'
             })
         } else if( password !== passwordConfirm ){
             return res.render('../view/register', {
-                message: 'Password do not match'
+                message: 'Password tidak sama'
             })
         }
 
@@ -40,7 +40,7 @@ exports.register = (req, res) => {
             }else {
                 console.log(result);
                 return res.render('../view/register', {
-                    message: 'User Registered'
+                    message: 'User Berhasil didaftarkan'
                 })
             }
         })
