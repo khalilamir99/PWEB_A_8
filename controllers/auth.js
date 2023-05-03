@@ -23,11 +23,11 @@ exports.register = (req, res) => {
 
         if( result.length > 0 ) {
             return res.render('../view/register', {
-                message: 'That Email is already in use'
+                message: 'Email telah digunakan'
             })
         } else if( password !== passwordConfirm ){
             return res.render('../view/register', {
-                message: 'Password do not match'
+                message: 'Password tidak sama'
             })
         }
 
@@ -40,7 +40,7 @@ exports.register = (req, res) => {
             }else {
                 console.log(result);
                 return res.render('../view/register', {
-                    message: 'User Registered'
+                    message: 'User Berhasil didaftarkan'
                 })
             }
         })
@@ -56,7 +56,7 @@ exports.login = async (req, res) => {
   
       if (!email || !password) {
         return res.status(400).render('../view/login', {
-          message: 'Please provide an email and password',
+          message: 'Masukkan Email atau Password',
         });
       }
   
@@ -67,7 +67,7 @@ exports.login = async (req, res) => {
           !(await bcrypt.compare(password, results[0].password))
         ) {
           res.status(401).render('../view/login', {
-            message: 'Email or Password is incorrect',
+            message: 'Email or Password Salah',
           });
         } else {
           const id = results[0].id;
@@ -104,11 +104,11 @@ exports.updateProfil = async (req, res) => {
       console.log(results);
       if (!results || results.length === 0) {
         res.status(401).render('../view/profil', {
-          message: 'User not found',
+          message: 'User tidak ditemukan',
         });
       } else if (!(await bcrypt.compare(password, results[0].password))) {
         res.status(401).render('../view/profil', {
-          message: 'Incorrect password',
+          message: 'Password salah',
         });
       } else {
         let hashedPassword = results[0].password;
@@ -122,7 +122,7 @@ exports.updateProfil = async (req, res) => {
           } else {
             console.log(result);
             return res.render('../view/profil', {
-                message: 'Profile updated'
+                message: 'Profil berhasil diupdate'
             });
           }
         });
@@ -173,5 +173,4 @@ exports.logout = async (req, res) => {
 
     res.status(200).redirect('/');
 }
-
 
