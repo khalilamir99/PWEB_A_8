@@ -1,5 +1,6 @@
 const express = require("express");
 const authController = require("../controllers/auth");
+const formsController = require("../controllers/forms");
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -76,9 +77,16 @@ router.get("/tambahTugas", authController.isLoggedIn, (req, res) => {
 });
 
 // Route for pendaftaran page
-router.get("/pendaftaran", authController.isLoggedIn, (req, res) => {
+router.get(
+  "/pendaftaran",
+  authController.isLoggedIn,
+  formsController.listTugas
+);
+
+// Route for tambahpendaftaran page
+router.get("/tambahpendaftaran", authController.isLoggedIn, (req, res) => {
   if (req.user) {
-    res.render("pendaftaran", {
+    res.render("../view/tambahpendaftaran", {
       user: req.user,
     });
   } else {
@@ -86,16 +94,18 @@ router.get("/pendaftaran", authController.isLoggedIn, (req, res) => {
   }
 });
 
-// Route for tambahpendaftaran page
-router.get("/tambahpendaftaran", authController.isLoggedIn, (req, res) => {
-  if (req.user) {
-    res.render("tambahpendaftaran", {
-      user: req.user,
-    });
-  } else {
-    res.redirect("/");
+router.post(
+  "/tambahpendaftaran",
+  authController.isLoggedIn,
+  formsController.tambahData,
+  (req, res) => {
+    if (req.user) {
+      res.redirect("/pendaftaran");
+    } else {
+      res.redirect("/");
+    }
   }
-});
+);
 
 // Route for editpendaftaran page
 router.get("/editpendaftaran/:id", authController.isLoggedIn, (req, res) => {
@@ -106,7 +116,7 @@ router.get("/editpendaftaran/:id", authController.isLoggedIn, (req, res) => {
     // Replace `fetchPendaftaranData` with the appropriate function to fetch pendaftaran data
     const pendaftaranData = fetchPendaftaranData(pendaftaranId);
 
-    res.render("editpendaftaran", {
+    res.render("../view/editpendaftaran", {
       user: req.user,
       pendaftaran: pendaftaranData,
     });

@@ -67,20 +67,20 @@
                     <div class="card-body">
                         <h4 class="card-title">Tambah Data Pendaftaran</h4>
                         <p>Isi formulir berikut untuk menambahkan data tugas</p>
-                        <form>
+                        <form method="post" action="/tambahpendaftaran">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label style="margin-bottom: 10px;" for="inputJudul">Judul</label>
-                                    <input style="margin-bottom: 10px;" type="text" class="form-control"
+                                    <input style="margin-bottom: 10px;" type="text" class="form-control" name="judul"
                                         id="inputJudul">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label style="margin-bottom: 10px;" for="inputDeskripsi">Deskripsi</label>
-                                    <textarea style="margin-bottom: 10px;" type="text" class="form-control"
+                                    <textarea style="margin-bottom: 10px;" type="text" class="form-control" name="deskripsi"
                                         id="inputDeskripsi"></textarea>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                            <button type="submit" class="btn btn-primary" data-toggle="modal"
                                 data-target="#exampleModalLong">
                                 Tambah
                             </button>

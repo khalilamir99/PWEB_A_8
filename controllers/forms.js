@@ -1,4 +1,5 @@
 const mysql = require("mysql");
+
 const db = mysql.createConnection({
   host: process.env.DATABASE_HOST,
   user: process.env.DATABASE_USER,
@@ -17,12 +18,12 @@ exports.tambahData = (req, res) => {
     (error, result) => {
       if (error) {
         console.log(error);
-        return res.render("pendaftaran", {
+        return res.render("../view/pendaftaran", {
           message: "Terjadi kesalahan saat menambahkan data pendaftaran",
         });
       } else {
         console.log(result);
-        return res.render("pendaftaran", {
+        return res.render("../view/pendaftaran", {
           message: "Data pendaftaran berhasil ditambahkan",
         });
       }
@@ -34,12 +35,12 @@ exports.listTugas = (req, res) => {
   db.query("SELECT * FROM forms", (error, results) => {
     if (error) {
       console.log(error);
-      return res.render("tugas", {
+      return res.render("pendaftaran", {
         message: "Terjadi kesalahan saat mengambil data tugas",
       });
     } else {
       console.log(results);
-      return res.render("tugas", {
+      return res.render("../view/pendaftaran", {
         data: results,
       });
     }
