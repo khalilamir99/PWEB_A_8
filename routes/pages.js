@@ -46,11 +46,15 @@ router.post(
   }
 );
 
-router.get(
-  "/pendaftaran",
-  authController.isLoggedIn,
-  submissionController.listTugas
-);
+router.get("/tugas", authController.isLoggedIn, (req, res) => {
+  if (req.user) {
+    res.render("../view/tugas", {
+      user: req.user,
+    });
+  } else {
+    res.redirect("/");
+  }
+});
 
 router.get("/editTugas", authController.isLoggedIn, (req, res) => {
   if (req.user) {
