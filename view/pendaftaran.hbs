@@ -53,12 +53,12 @@
 
     <section class="home-section">
         <nav>
-            <div class="sidebar-button">
-                <i style="color: rgb(255, 255, 255);" class='bx bx-menu sidebarBtn'></i>
-                <span style="color: rgb(255, 255, 255);" class="dashboard">Pengelolaan Pendaftaran</span>
-            </div>
-            <div>
-                <a href="/profil" class="btn btn-light pull-right"> {{ user.name }} </a>
+          <div class="sidebar-button">
+            <i style="color: rgb(255, 255, 255);" class='bx bx-menu sidebarBtn'></i>
+            <span style="color: rgb(255, 255, 255);" class="dashboard">Pengelolaan Tugas</span>
+          </div>
+          <div>
+            <a href="/profil" class="btn btn-light pull-right"> {{ user.name }} </a>
             </div>
         </nav>
   
@@ -80,16 +80,15 @@
                     <table class="table table-bordered">
                       <thead>
                         <tr>
-                          <th scope="col">No</th>
-                          <th scope="col">Judul</th>
-                          <th scope="col">Deskripsi</th>
-                          <th scope="col">Aksi</th>
+                          <th width="20px" scope="col">No</th>
+                          <th width="200px" scope="col">Judul</th>
+                          <th width="300px" scope="col">Deskripsi</th>
+                          <th width="80px" scope="col">Aksi</th>
                         </tr>
                       </thead>
                       <tbody>
                         {{#each data}}
                         <tr>
-                          <th scope="row">{{@index}}</th>
                           <td>{{ judul }}</td>
                           <td>{{ deskripsi }}</td>
                           <td>
@@ -101,8 +100,8 @@
                                 </svg>Edit
                               </button>
                             </a>
-                           
-                             <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong{{form_id}}">
+                  
+                            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong{{form_id}}">
                               <svg style="margin-right: 3px" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                                 <path
                                   d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
@@ -110,21 +109,20 @@
                               >Hapus
                             </button>
                              
-                              <div class="modal fade" id="exampleModalLong{{form_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                            <div class="modal-body">
-                                                <h5>Data pendaftaran berhasil dihapus</h5>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                                                <a href="/hapuspendaftaran/{{form_id}}" type="button" class="btn btn-danger" >Hapus</a>
-                                            </div>
-                                            </div>
-                                        </div>
-                                        </div>   
-                           
-                           
+                            <div class="modal fade" id="exampleModalLong{{form_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <h5>Apakah anda yakin untuk dihapus?</h5>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                      <a href="/hapuspendaftaran/{{form_id}}" type="button" class="btn btn-danger" >Hapus</a>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>   
+                      
                           </td>
                         </tr>
                       {{/each}}
@@ -148,6 +146,19 @@
         }else
         sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
         }
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+      var table = document.querySelector("table");
+      var rows = table.querySelectorAll("tbody tr");
+
+      rows.forEach(function(row, index) {
+      var cell = document.createElement("td");
+      cell.textContent = index + 1;
+      row.insertBefore(cell, row.firstChild);
+      });
+      });
     </script>
 
     </body>

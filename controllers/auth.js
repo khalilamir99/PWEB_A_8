@@ -96,9 +96,9 @@ exports.login = async (req, res) => {
     }
 };
 
-exports.updateProfil = async (req, res) => {
+exports.updatePassword = async (req, res) => {
   try {
-    const { name, email, password, newPassword } = req.body;
+    const { email, password, newPassword } = req.body;
 
     db.query('SELECT * FROM users WHERE email = ? ', [email], async (error, results) => {
       console.log(results);
@@ -116,13 +116,13 @@ exports.updateProfil = async (req, res) => {
           hashedPassword = await bcrypt.hash(newPassword, 8);
         }
     
-        db.query('UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?', [name, email, hashedPassword, results[0].id], (error, result) => {
+        db.query('UPDATE users SET email = ?, password = ? WHERE id = ?', [email, hashedPassword, results[0].id], (error, result) => {
           if (error) {
             console.log(error);
           } else {
             console.log(result);
-            return res.render('../view/profil', {
-                message: 'Profil berhasil diupdate'
+            return res.render('../view/login', {
+                message: 'Password berhasil diupdate'
             });
           }
         });
