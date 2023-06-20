@@ -2,7 +2,7 @@ const mysql = require("mysql");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { promisify } = require('util');
-
+const currentDate = new Date();
 
 const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
@@ -34,7 +34,7 @@ exports.register = (req, res) => {
         let hashedPassword = await bcrypt.hash(password, 8);
         console.log(hashedPassword);
 
-        db.query('INSERT INTO users SET ?', {name: name, email: email, password: hashedPassword }, (error, result) =>{
+        db.query('INSERT INTO users SET ?', {name: name, email: email, password: hashedPassword, created_at: currentDate }, (error, result) =>{
             if(error){
                 console.log(error);
             }else {
@@ -51,50 +51,45 @@ exports.register = (req, res) => {
 
 
 exports.login = async (req, res) => {
-    try {
-      const { email, password } = req.body;
-  
-      if (!email || !password) {
-        return res.status(400).render('../view/login', {
-          message: 'Masukkan Email atau Password',
+  try {
+    const { email, password } = req.body;
+
+    db.query('SELECT * FROM users WHERE email = ? ', [email], async (error, results) => {
+      console.log(results);
+      if (!results || results.length === 0) {
+        res.status(401).render('../view/login', {
+          message: 'Email belum terdaftar',
         });
+      } else if (!(await bcrypt.compare(password, results[0].password))) {
+        res.status(401).render('../view/login', {
+          message: 'Password salah',
+        });
+      } else {
+        const id = results[0].id;
+
+        const token = jwt.sign({ id }, process.env.JWT_SECRET, {
+          expiresIn: process.env.JWT_EXPIRES_IN,
+        });
+
+        console.log("The token is: " + token);
+
+        const cookieOptions = {
+          expires: new Date(
+            Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+          ),
+          httpOnly: true,
+        };
+
+        res.cookie('jwt', token, cookieOptions);
+        res.status(200).redirect("/home");
       }
-  
-      db.query('SELECT * FROM users WHERE email = ? ', [email], async (error, results) => {
-        console.log(results);
-        if (
-          !results ||
-          !(await bcrypt.compare(password, results[0].password))
-        ) {
-          res.status(401).render('../view/login', {
-            message: 'Email or Password Salah',
-          });
-        } else {
-          const id = results[0].id;
-          
-          const token = jwt.sign({ id }, process.env.JWT_SECRET, {
-            expiresIn: process.env.JWT_EXPIRES_IN
-          });
+    });
 
-          console.log("The token is: " + token);
-
-          const cookieOptions = {
-            expires: new Date(
-              Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
-            ),
-            httpOnly: true
-          }
-          
-          res.cookie('jwt', token, cookieOptions );
-          res.status(200).redirect("/home");
-        }
-
-      });
-
-    } catch (error) {
-      console.log(error);
-    }
+  } catch (error) {
+    console.log(error);
+  }
 };
+
 
 exports.updatePassword = async (req, res) => {
   try {
@@ -102,34 +97,28 @@ exports.updatePassword = async (req, res) => {
 
     db.query('SELECT * FROM users WHERE email = ? ', [email], async (error, results) => {
       console.log(results);
-      if (!results || results.length === 0) {
-        res.status(401).render('../view/profil', {
-          message: 'User tidak ditemukan',
-        });
+      if (error) {
+        console.log(error);
+      } else if (!results || results.length === 0) {
+        return res.send('<script>alert("User tidak ditemukan"); window.location.href = "/profil";</script>');
       } else if (!(await bcrypt.compare(password, results[0].password))) {
-        res.status(401).render('../view/profil', {
-          message: 'Password salah',
-        });
+        return res.send('<script>alert("Password salah"); window.location.href = "/profil";</script>');
       } else {
         let hashedPassword = results[0].password;
         if (newPassword) {
           hashedPassword = await bcrypt.hash(newPassword, 8);
         }
     
-        db.query('UPDATE users SET email = ?, password = ? WHERE id = ?', [email, hashedPassword, results[0].id], (error, result) => {
+        db.query('UPDATE users SET email = ?, password = ?, updated_at = ? WHERE id = ?', [email, hashedPassword, currentDate, results[0].id], (error, result) => {
           if (error) {
             console.log(error);
           } else {
             console.log(result);
-            return res.render('../view/login', {
-                message: 'Password berhasil diupdate'
-            });
+            return res.send('<script>alert("Password berhasil diupdate"); window.location.href = "/profil";</script>');
           }
         });
       }
     });
-    
-
   } catch (error) {
     console.log(error);
   }
