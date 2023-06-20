@@ -46,15 +46,11 @@ router.post(
   }
 );
 
-router.get("/tugas", authController.isLoggedIn, (req, res) => {
-  if (req.user) {
-    res.render("../view/tugas", {
-      user: req.user,
-    });
-  } else {
-    res.redirect("/");
-  }
-});
+router.get(
+  "/pendaftaran",
+  authController.isLoggedIn,
+  submissionController.listTugas
+);
 
 router.get("/editTugas", authController.isLoggedIn, (req, res) => {
   if (req.user) {
@@ -124,5 +120,11 @@ router.get("/editpendaftaran/:id", authController.isLoggedIn, (req, res) => {
     res.redirect("/");
   }
 });
+
+router.get(
+  "/hapuspendaftaran/:id",
+  authController.isLoggedIn,
+  formsController.hapusData
+);
 
 module.exports = router;
