@@ -83,12 +83,8 @@
                                     <input type="password" class="form-control" id="password" name="password" value="{{ user.password }}" readonly />                               
                                 </div>
 
-                                {{#if message }}
-                                <p class="alert alert-success">{{ message }} </p>
-                                {{/if}}
-
                                 <button class="btn btn-outline-dark" type="button" data-toggle="modal"
-                                data-target="#contohModal">Edit Profil</button>
+                                data-target="#contohModal">Edit Password</button>
 
                             </form>    
                         </div>
@@ -101,7 +97,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title">Edit Profil</h4>
+                                <h4 class="modal-title">Edit Password</h4>
                                 <button type="button" class="close" data-dismiss="modal"
                                     aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -110,10 +106,10 @@
 
                             <div class="modal-body">
                                 <form action="auth/profil" method="POST">
-                                    <div class="form-outline mb-4" style="text-align:left;">
+                                    {{!-- <div class="form-outline mb-4" style="text-align:left;">
                                         <label for="email">Nama Lengkap</label>
                                         <input type="name" class="form-control" id="name" name="name" required />
-                                    </div>
+                                    </div> --}}
                                 
                                     <div class="form-outline mb-4" style="text-align:left;">
                                         <label for="email">Email Address</label>  
@@ -133,6 +129,7 @@
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-outline-dark">SIMPAN</button>
                                     </div>
+
                                 </form>
                             </div>
                         </div>

@@ -34,7 +34,7 @@ router.get("/profil", authController.isLoggedIn, (req, res) => {
 router.post(
   "/profil",
   authController.isLoggedIn,
-  authController.updateProfil,
+  authController.updatePassword,
   (req, res) => {
     if (req.user) {
       res.render("../view/profil", {
