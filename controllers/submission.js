@@ -7,38 +7,16 @@ const db = mysql.createConnection({
   database: process.env.DATABASE,
 });
 
-exports.tambahData = (req, res) => {
-  console.log(req.body);
-
-  const { judul, deskripsi } = req.body;
-
-  db.query(
-    "INSERT INTO forms (judul, deskripsi) VALUES (?, ?)",
-    [judul, deskripsi],
-    (error, result) => {
-      if (error) {
-        console.log(error);
-        return res.render("../view/pendaftaran", {
-          message: "Terjadi kesalahan saat menambahkan data pendaftaran",
-        });
-      } else {
-        console.log(result);
-        return res.redirect("/pendaftaran");
-      }
-    }
-  );
-};
-
 exports.listTugas = (req, res) => {
   db.query("SELECT * FROM forms", (error, results) => {
     if (error) {
       console.log(error);
-      return res.render("pendaftaran", {
+      return res.render("tugas", {
         message: "Terjadi kesalahan saat mengambil data tugas",
       });
     } else {
       console.log(results);
-      return res.render("../view/pendaftaran", {
+      return res.render("../view/tugas", {
         data: results,
       });
     }
