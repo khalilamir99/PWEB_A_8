@@ -1,6 +1,7 @@
 const express = require("express");
 const authController = require("../controllers/auth");
 const formsController = require("../controllers/forms");
+const tugasController = require("../controllers/tugas");
 const router = express.Router();
 
 router.get("/", authController.isLoggedIn, authController.dashboard);
@@ -21,34 +22,10 @@ router.post("/editpendaftaran/:id", authController.isLoggedIn, formsController.e
 
 router.get("/hapuspendaftaran/:id", authController.isLoggedIn, formsController.hapusData);
 
-router.get("/tugas", authController.isLoggedIn, (req, res) => {
-  if (req.user) {
-    res.render("../view/tugas", {
-      user: req.user,
-    });
-  } else {
-    res.redirect("/");
-  }
-});
+router.get("/tugas", authController.isLoggedIn, tugasController.tugas);
 
-router.get("/editTugas", authController.isLoggedIn, (req, res) => {
-  if (req.user) {
-    res.render("../view/editTugas", {
-      user: req.user,
-    });
-  } else {
-    res.redirect("/");
-  }
-});
+router.get("/editTugas", authController.isLoggedIn, tugasController.editTugas);
 
-router.get("/tambahTugas", authController.isLoggedIn, (req, res) => {
-  if (req.user) {
-    res.render("../view/tambahtugas", {
-      user: req.user,
-    });
-  } else {
-    res.redirect("/");
-  }
-});
+router.get("/tambahTugas", authController.isLoggedIn, tugasController.tambahTugas);
 
 module.exports = router;
