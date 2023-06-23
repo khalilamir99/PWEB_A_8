@@ -8,12 +8,18 @@ const db = mysql.createConnection({
 });
 
 exports.tugas = (req, res) => {
-  if (req.user) {
-    res.render("../view/tugas", {
-      user: req.user,
-    });
-  } else {
-    res.redirect("/");
+  try {
+    if (req.user) {
+      res.render("../view/tugas", {
+        user: req.user,
+      });
+    }
+    //  else {
+    //   res.redirect("/");
+    // }
+    
+  } catch (error) {
+    console.log(error)
   }
 };
 
