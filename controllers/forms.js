@@ -43,7 +43,7 @@ exports.listTugas = (req, res) => {
   db.query("SELECT * FROM forms", (error, results) => {
     if (error) {
       console.log(error);
-      return res.render("pendaftaran", {
+      return res.render("../view/pendaftaran", {
         message: "Terjadi kesalahan saat mengambil data tugas",
       });
     } else {
