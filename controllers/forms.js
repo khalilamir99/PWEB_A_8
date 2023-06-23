@@ -7,6 +7,16 @@ const db = mysql.createConnection({
   database: process.env.DATABASE,
 });
 
+exports.tambahPendaftaran = (req, res) => {
+  if (req.user) {
+    res.render("../view/tambahpendaftaran", {
+      user: req.user,
+    });
+  } else {
+    res.redirect("/");
+  }
+};
+
 exports.tambahData = (req, res) => {
   console.log(req.body);
 
@@ -45,6 +55,27 @@ exports.listTugas = (req, res) => {
   });
 };
 
+exports.getEditPendaftaran = (req, res) => {
+  const pendaftaranId = req.params.id;
+
+  db.query("SELECT * FROM forms WHERE forms_id =?",
+          [pendaftaranId], (error, results) => {
+  if (error) {
+    res.redirect("/");
+    // Fetch the pendaftaran data from the database based on the pendaftaranId
+    // Replace `fetchPendaftaranData` with the appropriate function to fetch pendaftaran data
+    
+  } else {
+
+    res.render("../view/editpendaftaran", {
+      user: req.user,
+      pendaftaran: results,
+    });
+  }
+}
+);
+};
+
 exports.editPendaftaran = (req, res) => {
   const { forms_id, judul, deskripsi } = req.body;
 
@@ -54,12 +85,12 @@ exports.editPendaftaran = (req, res) => {
     (error, result) => {
       if (error) {
         console.log(error);
-        return res.render("edit_pendaftaran", {
+        return res.render("../view/editpendaftaran", {
           message: "Terjadi kesalahan saat mengedit pendaftaran",
         });
       } else {
         console.log(result);
-        return res.render("edit_pendaftaran", {
+        return res.render("../view/editpendaftaran", {
           message: "Pendaftaran berhasil diedit",
         });
       }
