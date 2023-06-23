@@ -23,8 +23,8 @@ exports.tambahData = (req, res) => {
   const { judul, deskripsi } = req.body;
 
   db.query(
-    "INSERT INTO forms (judul, deskripsi) VALUES (?, ?)",
-    [judul, deskripsi],
+    "INSERT INTO forms (user_id, judul, deskripsi) VALUES (?, ?, ?)",
+    [req.user.id ,judul, deskripsi],
     (error, result) => {
       if (error) {
         console.log(error);
