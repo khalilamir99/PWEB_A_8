@@ -28,16 +28,15 @@ exports.listForm = (req, res) =>  {
 exports.getEditTugas = (req, res) => {
   const tugasId = req.params.id;
 
-  db.query(
-    "SELECT * FROM tugas WHERE tugas_id = ?",
-    [tugasId],
-    (error, results) => {
+  db.query("SELECT * FROM submission WHERE form_id = ?",
+          [tugasId], (error, result) => {
       if (error) {
-        res.redirect("/");
+        res.json("errrrrrorrrrrrror");
       } else {
-        res.render("../view/edittugas", {
+        console.log("ini result"+ result + tugasId);
+        res.render("../view/editTugas", {
           user: req.user,
-          tugas: results,
+          tugas: result[0],
         });
       }
     }
@@ -69,27 +68,49 @@ exports.editTugas = (req, res) => {
 exports.getSubmitTugas = (req, res) => {
   const pendaftaranId = req.params.id;
 
-  db.query("SELECT * FROM forms WHERE forms_id =?",
+  db.query("SELECT * FROM forms WHERE form_id =?",
           [pendaftaranId], (error, results) => {
-  if (!error) {
-    res.redirect("/");
+  if (error) {
+    res.json("error submit tugas");
   } else {
+    console.log(results)
     res.render("../view/submitTugas", {
       user: req.user,
-      submit: results
+      submit: results[0]
     });
   }
 }
   );
 };
 
+// exports.submitTugas = (req, res) => {
+//   const { form_id, deskripsi, uploaded_file } = req.body;
+
+//   db.query(
+//     "INSERT INTO tugas (user_id, form_id, deskripsi, uploaded_file) VALUES (?, ?, ?, ?)",
+//     [req.user.id, form_id, deskripsi, uploaded_file],
+//     (error, result) => {
+//       if (error) {
+//         console.log(error);
+//         return res.render("../view/tugas", {
+//           message: "Terjadi kesalahan saat mengirimkan tugas",
+//         });
+//       } else {
+//         console.log(result);
+//         return res.redirect("/tugas");
+//       }
+//     }
+//   );
+// };
+
 exports.submitTugas = (req, res) => {
   console.log(req.body);
 
-  const { form_id, description} = req.body;
-  const file = req.file.filename
+  const { form_id, description } = req.body;
+
+  const file = req.file.filename;
   db.query(
-    "INSERT INTO forms (user_id, form_id, description, uploaded_file) VALUES (?, ?, ?)",
+    "INSERT INTO submission (user_id, form_id, description, uploaded_file) VALUES (?, ?, ?, ?)",
     [req.user.id, form_id, description, file],
     (error, result) => {
       if (error) {
@@ -100,6 +121,7 @@ exports.submitTugas = (req, res) => {
       } else {
         console.log(result);
         return res.redirect("/tugas");
+        
       }
     }
   );
