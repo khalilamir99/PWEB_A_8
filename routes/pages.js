@@ -22,10 +22,12 @@ router.post("/editpendaftaran/:id", authController.isLoggedIn, formsController.e
 
 router.get("/hapuspendaftaran/:id", authController.isLoggedIn, formsController.hapusData);
 
-router.get("/tugas", authController.isLoggedIn, tugasController.tugas);
+router.get("/tugas", authController.isLoggedIn, tugasController.listForm);
 
-router.get("/editTugas", authController.isLoggedIn, tugasController.editTugas);
+router.get("/editTugas/:id", authController.isLoggedIn, tugasController.getEditTugas);
 
-router.get("/tambahTugas", authController.isLoggedIn, tugasController.tambahTugas);
+router.post("/editTugas", authController.isLoggedIn, tugasController.editTugas);
+
+router.get("/submitTugas/:id", authController.isLoggedIn, tugasController.getSubmitTugas);
 
 module.exports = router;
