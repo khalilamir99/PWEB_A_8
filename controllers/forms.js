@@ -39,8 +39,10 @@ exports.tambahData = (req, res) => {
   );
 };
 
-exports.listTugas = (req, res) => {
-  db.query("SELECT * FROM forms", (error, results) => {
+exports.listTugas = (req, res) =>  {
+  const userId = req.user.id; // Mengambil user ID dari objek req.user
+
+  db.query("SELECT * FROM forms WHERE user_id = ?", [userId], (error, results) => {
     if (error) {
       console.log(error);
       return res.render("pendaftaran", {
@@ -49,6 +51,7 @@ exports.listTugas = (req, res) => {
     } else {
       console.log(results);
       return res.render("../view/pendaftaran", {
+        user: req.user,
         data: results,
       });
     }
@@ -60,13 +63,9 @@ exports.getEditPendaftaran = (req, res) => {
 
   db.query("SELECT * FROM forms WHERE forms_id =?",
           [pendaftaranId], (error, results) => {
-  if (error) {
+  if (!error) {
     res.redirect("/");
-    // Fetch the pendaftaran data from the database based on the pendaftaranId
-    // Replace `fetchPendaftaranData` with the appropriate function to fetch pendaftaran data
-    
   } else {
-
     res.render("../view/editpendaftaran", {
       user: req.user,
       pendaftaran: results,
