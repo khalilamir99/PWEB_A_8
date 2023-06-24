@@ -65,18 +65,18 @@
                         <h4 class="card-title">Ubah Data Pendaftaran </h4>
                         <p>Isi formulir berikut untuk mengubah data pendaftaran</p>
                         <form method="post" action="/editpendaftaran"> 
+                        <input type="hidden" name="form_id" value="{{pendaftaran.form_id}}">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label style="margin-bottom: 10px;" for="judul">Judul</label>
-                                    <input style="margin-bottom: 10px;" type="text" class="form-control" name="judul">
+                                    <input style="margin-bottom: 10px;" type="text" class="form-control" name="judul" value="{{pendaftaran.judul}}">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label style="margin-bottom: 10px;" for="deskripsi">Deskripsi</label>
-                                    <textarea style="margin-bottom: 10px;" class="form-control" name="deskripsi"></textarea>
+                                    <textarea style="margin-bottom: 10px;" class="form-control" name="deskripsi"> {{pendaftaran.deskripsi}} </textarea>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#exampleModalLong">
+                            <button type="submit" class="btn btn-primary">
                                 Ubah
                             </button>
                         </form>

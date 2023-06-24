@@ -83,34 +83,19 @@ exports.getSubmitTugas = (req, res) => {
   );
 };
 
-exports.getEditPendaftaran = (req, res) => {
-  const pendaftaranId = req.params.id;
-
-  db.query("SELECT * FROM forms WHERE forms_id =?",
-          [pendaftaranId], (error, results) => {
-  if (!error) {
-    res.redirect("/");
-  } else {
-    res.render("../view/editTugas", {
-      user: req.user,
-      submit: results,
-    });
-  }
-}
-);
-};
-
 exports.submitTugas = (req, res) => {
-  const { form_id, deskripsi, uploaded_file } = req.body;
+  console.log(req.body);
 
+  const { form_id, description} = req.body;
+  const file = req.file.filename
   db.query(
-    "INSERT INTO tugas (user_id, form_id, deskripsi, uploaded_file) VALUES (?, ?, ?, ?)",
-    [req.user.id, form_id, deskripsi, uploaded_file],
+    "INSERT INTO forms (user_id, form_id, description, uploaded_file) VALUES (?, ?, ?)",
+    [req.user.id, form_id, description, file],
     (error, result) => {
       if (error) {
         console.log(error);
         return res.render("../view/tugas", {
-          message: "Terjadi kesalahan saat mengirimkan tugas",
+          message: "Terjadi kesalahan saat menambahkan data pendaftaran",
         });
       } else {
         console.log(result);

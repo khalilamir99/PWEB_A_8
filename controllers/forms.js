@@ -39,13 +39,13 @@ exports.tambahData = (req, res) => {
   );
 };
 
-exports.listTugas = (req, res) =>  {
+exports.listTugas = (req, res) => {
   const userId = req.user.id; // Mengambil user ID dari objek req.user
 
   db.query("SELECT * FROM forms WHERE user_id = ?", [userId], (error, results) => {
     if (error) {
       console.log(error);
-      return res.render("pendaftaran", {
+      return res.render("../view/pendaftaran", {
         message: "Terjadi kesalahan saat mengambil data tugas",
       });
     } else {
@@ -58,17 +58,20 @@ exports.listTugas = (req, res) =>  {
   });
 };
 
+
 exports.getEditPendaftaran = (req, res) => {
   const pendaftaranId = req.params.id;
 
-  db.query("SELECT * FROM forms WHERE forms_id =?",
+  db.query("SELECT * FROM forms WHERE form_id =?",
           [pendaftaranId], (error, results) => {
-  if (!error) {
-    res.redirect("/");
+  if (error) {
+    console.error(error)
+    res.json("errrrrrorrrrrrror");
   } else {
+    console.log(results)
     res.render("../view/editpendaftaran", {
       user: req.user,
-      pendaftaran: results,
+      pendaftaran: results[0],
     });
   }
 }
@@ -76,11 +79,11 @@ exports.getEditPendaftaran = (req, res) => {
 };
 
 exports.editPendaftaran = (req, res) => {
-  const { forms_id, judul, deskripsi } = req.body;
+  const { form_id, judul, deskripsi } = req.body;
 
   db.query(
-    "UPDATE forms SET judul = ?, deskripsi = ? WHERE forms_id = ?",
-    [judul, deskripsi, forms_id],
+    "UPDATE forms SET judul = ?, deskripsi = ? WHERE form_id = ?",
+    [judul, deskripsi, form_id],
     (error, result) => {
       if (error) {
         console.log(error);
@@ -89,9 +92,7 @@ exports.editPendaftaran = (req, res) => {
         });
       } else {
         console.log(result);
-        return res.render("../view/editpendaftaran", {
-          message: "Pendaftaran berhasil diedit",
-        });
+        return res.redirect("/pendaftaran");
       }
     }
   );

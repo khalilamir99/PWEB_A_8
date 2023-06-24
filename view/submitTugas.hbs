@@ -69,14 +69,15 @@
                     <div class="card-body">
                         <h4 class="card-title">Submit Tugas</h4>
                         <p>Isi formulir berikut untuk submit tugas</p>
-                        <form method="post" action="/submittugas">
+                        <form method="post" action="/submittugas" enctype="multipart/form-data">
+                        <input type="hidden" name="form_id" value="{{submit.form_id}}">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label style="margin-bottom: 10px;" for="inputDeskripsi">Deskripsi</label>
-                                    <textarea style="margin-bottom: 10px;" type="text" class="form-control" name="deskripsi"></textarea>
+                                    <label style="margin-bottom: 10px;" for="inputDescription">Deskripsi</label>
+                                    <textarea style="margin-bottom: 10px;" type="text" class="form-control" name="description"></textarea>
                                 </div>
                                 <div class="form-group col-md-6">
-                                  <input type="File" name="" accept=".pdf, .txt">
+                                  <input type="File" name="uploaded_file" accept=".pdf, .txt" >
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary" data-toggle="modal"

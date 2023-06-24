@@ -1,8 +1,24 @@
 const express = require("express");
+const multer  = require('multer');
+const path = require('path');
 const authController = require("../controllers/auth");
 const formsController = require("../controllers/forms");
 const tugasController = require("../controllers/tugas");
 const router = express.Router();
+
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, path.join(__dirname,'../uploads/'));
+    },
+    filename: (req, file, cb) => {
+      console.log(file);
+      cb(null,  Date.now().toString() + '_' + file.originalname)
+    }
+})
+
+const uploadTugas = multer({
+    storage: fileStorage,
+})
 
 router.get("/", authController.isLoggedIn, authController.dashboard);
 
@@ -16,18 +32,20 @@ router.get("/tambahpendaftaran", authController.isLoggedIn, formsController.tamb
 
 router.post("/tambahpendaftaran", authController.isLoggedIn, formsController.tambahData);
 
-router.get("/editpendaftaran/:id", authController.isLoggedIn, formsController.getEditPendaftaran);
+router.get("/editpendaftaran-:id", authController.isLoggedIn, formsController.getEditPendaftaran);
 
-router.post("/editpendaftaran/:id", authController.isLoggedIn, formsController.editPendaftaran);
+router.post("/editpendaftaran", authController.isLoggedIn, formsController.editPendaftaran);
 
-router.get("/hapuspendaftaran/:id", authController.isLoggedIn, formsController.hapusData);
+router.get("/hapuspendaftaran-:id", authController.isLoggedIn, formsController.hapusData);
 
 router.get("/tugas", authController.isLoggedIn, tugasController.listForm);
 
-router.get("/editTugas/:id", authController.isLoggedIn, tugasController.getEditTugas);
+router.get("/editTugas-:id", authController.isLoggedIn, tugasController.getEditTugas);
 
 router.post("/editTugas", authController.isLoggedIn, tugasController.editTugas);
 
-router.get("/submitTugas/:id", authController.isLoggedIn, tugasController.getSubmitTugas);
+router.get("/submitTugas-:id", authController.isLoggedIn, tugasController.getSubmitTugas);
+
+router.post("/submittugas", authController.isLoggedIn, uploadTugas.single('uploaded_file'), tugasController.submitTugas);
 
 module.exports = router;
