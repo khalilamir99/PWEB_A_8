@@ -40,7 +40,9 @@ exports.tambahData = (req, res) => {
 };
 
 exports.listTugas = (req, res) => {
-  db.query("SELECT * FROM forms", (error, results) => {
+  const userId = req.user.id; // Mengambil user ID dari objek req.user
+
+  db.query("SELECT * FROM forms WHERE user_id = ?", [userId], (error, results) => {
     if (error) {
       console.log(error);
       return res.render("pendaftaran", {
@@ -54,6 +56,7 @@ exports.listTugas = (req, res) => {
     }
   });
 };
+
 
 exports.getEditPendaftaran = (req, res) => {
   const pendaftaranId = req.params.id;
