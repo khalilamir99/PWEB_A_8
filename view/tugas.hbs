@@ -1,52 +1,50 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-   <head>
-        <meta charset="UTF-8">
-        <!--<title> Responsiive Admin Dashboard | CodingLab </title>-->
-        <link rel="stylesheet" href="mainstyle.css">
-        <!-- Boxicons CDN Link -->
-        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-        crossorigin="anonymous"/>
-        <link rel="shortcut icon" href="perpus.png">
-        <title>E-Tugas</title>
-    </head>
 
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <!--<title> Responsiive Admin Dashboard | CodingLab </title>-->
+    <link rel="stylesheet" href="mainstyle.css">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <link rel="shortcut icon" href="perpus.png">
+    <title>E-Tugas</title>
+</head>
+
+<body>
     <div class="sidebar">
         <div class="logo-details">
-            <img src = "perpus.png" alt="Logo" width="50" height="50" style="margin:0px 5px"></i>
+            <img src="perpus.png" alt="Logo" width="50" height="50" style="margin:0px 5px"></i>
             <span class="logo_name" style="font-size: 24px;">e-Tugas</span>
         </div>
         <ul class="nav-links">
             <li>
-            <a href="/home">
-                <i class='bx bx-grid-alt' ></i>
-                <span class="links_name">Dashboard</span>
-            </a>
+                <a href="/">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="links_name">Dashboard</span>
+                </a>
             </li>
             <li>
-            <a href="/tugas" class="active">
-                <i class='bx bx-book' ></i>
-                <span class="links_name">Data Tugas</span>
-            </a>
+                <a href="/tugas" class="active">
+                    <i class='bx bx-book'></i>
+                    <span class="links_name">Data Tugas</span>
+                </a>
             </li>
             <li>
-            <a href="/pendaftaran">
-                <i class='bx bx-task' ></i>
-                <span class="links_name">Data Pendaftaran</span>
-            </a>
+                <a href="/pendaftaran">
+                    <i class='bx bx-task'></i>
+                    <span class="links_name">Data Pendaftaran</span>
+                </a>
             </li>
             <li class="log_out">
-            <a href="/auth/logout">
-                <i class='bx bx-log-out'></i>
-                <span class="links_name">Log out</span>
-            </a>
+                <a href="/auth/logout">
+                    <i class='bx bx-log-out'></i>
+                    <span class="links_name">Log out</span>
+                </a>
             </li>
         </ul>
     </div>
@@ -55,111 +53,68 @@
         <nav>
             <div class="sidebar-button">
                 <i style="color: rgb(255, 255, 255);" class='bx bx-menu sidebarBtn'></i>
-                <span style="color: rgb(255, 255, 255);" class="dashboard">Pengelolaan Tugas</span>
+                <span style="color: rgb(255, 255, 255);" class="dashboard">Pengelolaan Pendaftaran</span>
             </div>
             <div>
-                <a href="/profil" class="btn btn-light pull-right"> {{ user.name }} </a>
+                <a href="/profil" class="btn btn-light pull-right">{{ user.name }}</a>
             </div>
         </nav>
-      
+
         <div class="home-content">
             <div style="margin-left: 20px; margin-right:20px; margin-top:-20px">
                 <div class="card" style="padding: 20px;">
                     <div class="card-body">
-                        <h4 class="card-title">Pengelolaan Tugas </b></h4>
-                          <div style="float: right; margin-right: 20px; margin-bottom: 10px">
-                            <a href="/tambahTugas">
-                              <button type="button" class="btn btn-primary">
-                                <svg style="margin-left: 3px" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" /></svg
-                                >Tambah
-                              </button>
-                            </a>
-                          </div>
-                          <div>
+                        <h4 class="card-title">Pengelolaan Tugas </h4>
+                        <div>
                             <table class="table table-bordered">
-                              <thead>
+                            <thead>
                                 <tr>
-                                  <th scope="col">No</th>
-                                  <th scope="col">Judul</th>
-                                  <th scope="col">Deskripsi</th>
-                                  <th scope="col">Aksi</th>
+                                <th width="20px" scope="col">No</th>
+                                <th width="200px" scope="col">Judul</th>
+                                <th width="300px" scope="col">Deskripsi</th>
+                                <th width="80px" scope="col">Aksi</th>
                                 </tr>
-                              </thead>
-                              <tbody>
+                            </thead>
+                            <tbody>
+                                {{#each data}}
                                 <tr>
-                                  <th scope="row">1</th>
-                                  <td></td>
-                                  <td></td>
-                                  <td>
-                                    <a href="/editTugas"
-                                      ><button style="margin-right: 5px" type="button" class="btn btn-primary">
-                                        <svg style="margin-right: 3px" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                          <path
-                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
-                                          />
-                                          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" /></svg
-                                        >Edit
-                                      </button></a
-                                    ><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                                      <svg style="margin-left: 3px" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" /></svg
-                                      >submit
-                                    </button>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">2</th>
-                                <td></td>
-                                  <td></td>
-                                  <td>
-                                    <a href="/editTugas"
-                                      ><button style="margin-right: 5px" type="button" class="btn btn-primary">
-                                        <svg style="margin-right: 3px" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                          <path
-                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
-                                          />
-                                          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" /></svg
-                                        >Edit
-                                      </button></a
-                                    ><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                                      <svg style="margin-left: 3px" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" /></svg
-                                      >submit
-                                    </button>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <th scope="row">3</th>
-                                <td></td>
-                                  <td></td>
-                                  <td>
-                                    <a href="/editTugas"
-                                      ><button style="margin-right: 5px" type="button" class="btn btn-primary">
-                                        <svg style="margin-right: 3px" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                          <path
-                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
-                                          />
-                                          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" /></svg
-                                        >Edit
-                                      </button></a
-                                    ><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                                      <svg style="margin-left: 3px" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" /></svg
-                                      >submit
-                                    </button>
-                                  </td>
-                                </tr>
-                              </tbody>
+                                <td>{{ judul }}</td>
+                                <td>{{ deskripsi }}</td>
+                                <td>
+                                            <a href="/editTugas-{{form_id}}">
+                                                <button style="margin-right: 5px" type="button"
+                                                    class="btn btn-primary">
+                                                    <svg style="margin-right: 3px" xmlns="http://www.w3.org/2000/svg"
+                                                        width="16" height="16" fill="currentColor"
+                                                        class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                        <path fill-rule="evenodd"
+                                                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                    </svg> Edit
+                                                </button>
+                                            </a>
+                                            <a href="/submitTugas-{{form_id}}" type="button" class="btn btn-primary">
+                                                <svg style="margin-left: 3px" xmlns="http://www.w3.org/2000/svg"
+                                                    width="16" height="16" fill="currentColor"
+                                                    class="bi bi-plus" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                                </svg> submit
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
                             </table>
-                          </div> 
-                     </div>
-                </div>  
-            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>      
-        
-    
+    </section>
+
+
     <script>
         let sidebar = document.querySelector(".sidebar");
         let sidebarBtn = document.querySelector(".sidebarBtn");
@@ -172,8 +127,24 @@
         }
     </script>
 
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+      var table = document.querySelector("table");
+      var rows = table.querySelectorAll("tbody tr");
+
+      rows.forEach(function(row, index) {
+      var cell = document.createElement("td");
+      cell.textContent = index + 1;
+      row.insertBefore(cell, row.firstChild);
+      });
+      });
+    </script>
+
     </body>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+       
+
 </html>

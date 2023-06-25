@@ -7,14 +7,24 @@ const db = mysql.createConnection({
   database: process.env.DATABASE,
 });
 
+exports.tambahPendaftaran = (req, res) => {
+  if (req.user) {
+    res.render("../view/tambahpendaftaran", {
+      user: req.user,
+    });
+  } else {
+    res.redirect("/");
+  }
+};
+
 exports.tambahData = (req, res) => {
   console.log(req.body);
 
   const { judul, deskripsi } = req.body;
 
   db.query(
-    "INSERT INTO forms (judul, deskripsi) VALUES (?, ?)",
-    [judul, deskripsi],
+    "INSERT INTO forms (user_id, judul, deskripsi) VALUES (?, ?, ?)",
+    [req.user.id ,judul, deskripsi],
     (error, result) => {
       if (error) {
         console.log(error);
@@ -30,38 +40,59 @@ exports.tambahData = (req, res) => {
 };
 
 exports.listTugas = (req, res) => {
-  db.query("SELECT * FROM forms", (error, results) => {
+  const userId = req.user.id; // Mengambil user ID dari objek req.user
+
+  db.query("SELECT * FROM forms WHERE user_id = ?", [userId], (error, results) => {
     if (error) {
       console.log(error);
-      return res.render("pendaftaran", {
+      return res.render("../view/pendaftaran", {
         message: "Terjadi kesalahan saat mengambil data tugas",
       });
     } else {
       console.log(results);
       return res.render("../view/pendaftaran", {
+        user: req.user,
         data: results,
       });
     }
   });
 };
 
+
+exports.getEditPendaftaran = (req, res) => {
+  const pendaftaranId = req.params.id;
+
+  db.query("SELECT * FROM forms WHERE form_id =?",
+          [pendaftaranId], (error, results) => {
+  if (error) {
+    console.error(error)
+    res.json("errrrrrorrrrrrror");
+  } else {
+    console.log(results)
+    res.render("../view/editpendaftaran", {
+      user: req.user,
+      pendaftaran: results[0],
+    });
+  }
+}
+);
+};
+
 exports.editPendaftaran = (req, res) => {
-  const { forms_id, judul, deskripsi } = req.body;
+  const { form_id, judul, deskripsi } = req.body;
 
   db.query(
-    "UPDATE forms SET judul = ?, deskripsi = ? WHERE forms_id = ?",
-    [judul, deskripsi, forms_id],
+    "UPDATE forms SET judul = ?, deskripsi = ? WHERE form_id = ?",
+    [judul, deskripsi, form_id],
     (error, result) => {
       if (error) {
         console.log(error);
-        return res.render("edit_pendaftaran", {
+        return res.render("../view/editpendaftaran", {
           message: "Terjadi kesalahan saat mengedit pendaftaran",
         });
       } else {
         console.log(result);
-        return res.render("edit_pendaftaran", {
-          message: "Pendaftaran berhasil diedit",
-        });
+        return res.redirect("/pendaftaran");
       }
     }
   );

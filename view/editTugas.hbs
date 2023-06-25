@@ -25,7 +25,7 @@
         </div>
         <ul class="nav-links">
             <li>
-            <a href="/home">
+            <a href="/">
                 <i class='bx bx-grid-alt' ></i>
                 <span class="links_name">Dashboard</span>
             </a>
@@ -68,19 +68,21 @@
               <div class="card-body">
                 <h4 class="card-title">Ubah Data Tugas </b></h4>
                 <p>Isi formulir berikut untuk merubah data tugas</p>
-                  <form>
+                    <form method="post" action="/editpendaftaran"> 
+                    <input type="hidden" name="form_id" value="{{tugas.form_id}}">
                       <div class="form-row">
-                        <div class="form-group col-md-6">
-                          <label style="margin-bottom: 10px;" for="inputEmail4">Judul</label>
-                          <input style="margin-bottom: 10px;"type="" class="form-control">
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label style="margin-bottom: 10px;" for="inputPassword4">Deskripsi</label>
-                          <textarea style="margin-bottom: 10px;" type="" class="form-control"></textarea>
-                        </div>
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                          Ubah
-                        </button>
+                                <div class="form-group col-md-6">
+                                    <label style="margin-bottom: 10px;" for="inputDescription">Deskripsi</label>
+                                    <textarea style="margin-bottom: 10px;" type="text" class="form-control" name="description"> {{tugas.description}} </textarea>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <input type="file" name="uploaded_file" accept=".pdf, .txt">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" data-toggle="modal"
+                                data-target="#exampleModalLong">
+                                Tambah
+                            </button>
                    </form>
               </div>
             </div>

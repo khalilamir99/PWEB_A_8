@@ -1,134 +1,51 @@
 const express = require("express");
+const multer  = require('multer');
+const path = require('path');
 const authController = require("../controllers/auth");
 const formsController = require("../controllers/forms");
+const tugasController = require("../controllers/tugas");
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.render("../view/login");
-});
-
-router.get("/register", (req, res) => {
-  res.render("../view/register");
-});
-
-router.get("/home", authController.isLoggedIn, (req, res) => {
-  if (req.user) {
-    res.render("../view/dashboard", {
-      user: req.user,
-    });
-  } else {
-    res.redirect("/");
-  }
-});
-
-router.get("/profil", authController.isLoggedIn, (req, res) => {
-  if (req.user) {
-    res.render("../view/profil", {
-      user: req.user,
-    });
-  } else {
-    res.redirect("/");
-  }
-});
-
-router.post(
-  "/profil",
-  authController.isLoggedIn,
-  authController.updatePassword,
-  (req, res) => {
-    if (req.user) {
-      res.render("../view/profil", {
-        user: req.user,
-      });
-    } else {
-      res.redirect("/");
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, path.join(__dirname,'../uploads/'));
+    },
+    filename: (req, file, cb) => {
+      console.log(file);
+      cb(null,  Date.now().toString() + '_' + file.originalname)
     }
-  }
-);
+})
 
-router.get("/tugas", authController.isLoggedIn, (req, res) => {
-  if (req.user) {
-    res.render("../view/tugas", {
-      user: req.user,
-    });
-  } else {
-    res.redirect("/");
-  }
-});
+const uploadTugas = multer({
+    storage: fileStorage,
+})
 
-router.get("/editTugas", authController.isLoggedIn, (req, res) => {
-  if (req.user) {
-    res.render("../view/editTugas", {
-      user: req.user,
-    });
-  } else {
-    res.redirect("/");
-  }
-});
+router.get("/", authController.isLoggedIn, authController.dashboard);
 
-router.get("/tambahTugas", authController.isLoggedIn, (req, res) => {
-  if (req.user) {
-    res.render("../view/tambahtugas", {
-      user: req.user,
-    });
-  } else {
-    res.redirect("/");
-  }
-});
+router.get("/profil", authController.isLoggedIn, authController.getProfil);
 
-// Route for pendaftaran page
-router.get(
-  "/pendaftaran",
-  authController.isLoggedIn,
-  formsController.listTugas
-);
+router.post("/editprofil", authController.isLoggedIn, authController.updatePassword);
 
-// Route for tambahpendaftaran page
-router.get("/tambahpendaftaran", authController.isLoggedIn, (req, res) => {
-  if (req.user) {
-    res.render("../view/tambahpendaftaran", {
-      user: req.user,
-    });
-  } else {
-    res.redirect("/");
-  }
-});
+router.get("/pendaftaran", authController.isLoggedIn, formsController.listTugas);
 
-router.post(
-  "/tambahpendaftaran",
-  authController.isLoggedIn,
-  formsController.tambahData,
-  (req, res) => {
-    if (req.user) {
-      res.redirect("/pendaftaran");
-    } else {
-      res.redirect("/");
-    }
-  }
-);
+router.get("/tambahpendaftaran", authController.isLoggedIn, formsController.tambahPendaftaran);
 
-// Route for editpendaftaran page
-router.get("/editpendaftaran/:id", authController.isLoggedIn, (req, res) => {
-  const pendaftaranId = req.params.id;
+router.post("/tambahpendaftaran", authController.isLoggedIn, formsController.tambahData);
 
-  if (req.user) {
-    // Fetch the pendaftaran data from the database based on the pendaftaranId
-    // Replace `fetchPendaftaranData` with the appropriate function to fetch pendaftaran data
-    const pendaftaranData = fetchPendaftaranData(pendaftaranId);
+router.get("/editpendaftaran-:id", authController.isLoggedIn, formsController.getEditPendaftaran);
 
-    res.render("../view/editpendaftaran", {
-      user: req.user,
-      pendaftaran: pendaftaranData,
-    });
-  } else {
-    res.redirect("/");
-  }
-});
+router.post("/editpendaftaran", authController.isLoggedIn, formsController.editPendaftaran);
 
-router.get(
-  "/hapuspendaftaran/:id",
-  authController.isLoggedIn,
-  formsController.hapusData
-);
+router.get("/hapuspendaftaran-:id", authController.isLoggedIn, formsController.hapusData);
+
+router.get("/tugas", authController.isLoggedIn, tugasController.listForm);
+
+router.get("/editTugas-:id", authController.isLoggedIn, tugasController.getEditTugas);
+
+router.post("/editTugas", authController.isLoggedIn, tugasController.editTugas);
+
+router.get("/submitTugas-:id", authController.isLoggedIn, tugasController.getSubmitTugas);
+
+router.post("/submittugas", authController.isLoggedIn, uploadTugas.single('uploaded_file'), tugasController.submitTugas);
 
 module.exports = router;
