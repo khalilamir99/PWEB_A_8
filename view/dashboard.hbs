@@ -75,25 +75,18 @@
             </div>
 
             <div class="">
-                {{#each forms}}
+                {{#each data}}
                 <div class="card mx-2" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">{{this.judul}}</h5>
                         <p class="card-text">{{this.deskripsi}}</p>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">{{this.user.name}}</li>
-                    </ul>
                     <div class="card-body">
-                        <a href="/detailTugas-{{this.form_id}}" class="card-link">Detail inputan</a>
+                        <a href="/detailTugas-{{this.form_id}}" class="card-link">Lihat Submit</a>
                     </div>
                 </div>
                 {{/each}}
             </div>
-
-
-
-
         </div>
 
 
