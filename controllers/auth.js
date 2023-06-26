@@ -6,6 +6,8 @@ const moment = require("moment");
 const currentDate = moment().format("YYYY-MM-DD HH:mm:ss");
 
 
+
+
 const db = mysql.createConnection({
   host: process.env.DATABASE_HOST,
   user: process.env.DATABASE_USER,
@@ -132,8 +134,8 @@ exports.updatePassword = async (req, res) => {
           }
 
           db.query(
-            "UPDATE users SET email = ?, password = ?, WHERE id = ?",
-            [email, hashedPassword, results[0].id],
+            "UPDATE users SET email = ?, password = ?, updated_at = ? WHERE id = ?",
+            [email, hashedPassword, currentDate, results[0].id],
             (error, result) => {
               if (error) {
                 console.log(error);
@@ -144,7 +146,7 @@ exports.updatePassword = async (req, res) => {
                 );
               }
             }
-          );          
+          );                  
         }
       }
     );
