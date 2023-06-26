@@ -2,7 +2,9 @@ const mysql = require("mysql");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { promisify } = require("util");
-const currentDate = new Date();
+const moment = require("moment");
+const currentDate = moment().format("YYYY-MM-DD HH:mm:ss");
+
 
 const db = mysql.createConnection({
   host: process.env.DATABASE_HOST,
@@ -43,7 +45,8 @@ exports.register = (req, res) => {
           name: name,
           email: email,
           password: hashedPassword,
-          created_at: currentDate,
+          created_at: moment().format("YYYY-MM-DD HH:mm:ss"),
+          updated_at: moment().format("YYYY-MM-DD HH:mm:ss"),
         },
         (error, result) => {
           if (error) {
@@ -129,8 +132,8 @@ exports.updatePassword = async (req, res) => {
           }
 
           db.query(
-            "UPDATE users SET email = ?, password = ?, updated_at = ? WHERE id = ?",
-            [email, hashedPassword, currentDate, results[0].id],
+            "UPDATE users SET email = ?, password = ?, WHERE id = ?",
+            [email, hashedPassword, results[0].id],
             (error, result) => {
               if (error) {
                 console.log(error);
@@ -141,7 +144,7 @@ exports.updatePassword = async (req, res) => {
                 );
               }
             }
-          );
+          );          
         }
       }
     );
@@ -191,7 +194,7 @@ exports.logout = async (req, res) => {
     httpOnly: true,
   });
 
-  res.status(200).redirect("/");
+  res.status(200).redirect("/auth/login");
 };
 
 exports.getRegister = async (req, res) => {
@@ -202,15 +205,33 @@ exports.getLogin = async (req, res) => {
   res.render("../view/login");
 };
 
-exports.dashboard = async (req, res) => {
-  if (req.user) {
-    res.render("../view/dashboard", {
-      user: req.user,
-    });
-  } else {
+exports.dashboard = (req, res) => {
+  if (req.user==undefined||null) {
     res.redirect("/auth/login");
+    
+  } else {
+    const userId = req.user.id;
+    db.query(
+      "SELECT * FROM forms WHERE user_id = ?", [userId], (error, result) => {
+        if (error) {
+          console.log(error);
+          return res.render("../view/dashboard", {
+            message: "Terjadi kesalahan saat mengambil data tugas",
+          });
+        } else {
+          console.log(result);
+          return res.render("../view/dashboard", {
+            user: req.user,
+            data: result,
+          });
+          // return res.json(result);
+        }
+      }
+    );
   }
+ 
 };
+
 
 exports.getProfil = async (req, res) => {
   if (req.user) {

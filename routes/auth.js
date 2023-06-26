@@ -6,6 +6,8 @@ router.post("/register", authController.register);
 
 router.get("/register", authController.getRegister);
 
+router.post("/profil", authController.updatePassword);
+
 router.post("/login", authController.login);
 
 router.get("/login", authController.getLogin);

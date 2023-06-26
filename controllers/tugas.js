@@ -25,45 +25,45 @@ exports.listForm = (req, res) =>  {
   });
 };
 
-exports.getEditTugas = (req, res) => {
-  const tugasId = req.params.id;
+// exports.getEditTugas = (req, res) => {
+//   const tugasId = req.params.id;
 
-  db.query("SELECT * FROM submission WHERE form_id = ?",
-          [tugasId], (error, result) => {
-      if (error) {
-        res.json("errrrrrorrrrrrror");
-      } else {
-        console.log("ini result"+ result + tugasId);
-        res.render("../view/editTugas", {
-          user: req.user,
-          tugas: result[0],
-        });
-      }
-    }
-  );
-};
+//   db.query("SELECT * FROM submission WHERE form_id = ?",
+//           [tugasId], (error, result) => {
+//       if (error) {
+//         res.json("errrrrrorrrrrrror");
+//       } else {
+//         console.log("ini result"+ result + tugasId);
+//         res.render("../view/editTugas", {
+//           user: req.user,
+//           tugas: result[0],
+//         });
+//       }
+//     }
+//   );
+// };
 
-exports.editTugas = (req, res) => {
-  const { tugas_id, deskripsi, uploaded_file } = req.body;
+// exports.editTugas = (req, res) => {
+//   const { tugas_id, deskripsi, uploaded_file } = req.body;
 
-  db.query(
-    "UPDATE tugas SET deskripsi = ?, uploaded_file = ? WHERE tugas_id = ?",
-    [deskripsi, uploaded_file, tugas_id],
-    (error, result) => {
-      if (error) {
-        console.log(error);
-        return res.render("../view/edittugas", {
-          message: "Terjadi kesalahan saat mengedit tugas",
-        });
-      } else {
-        console.log(result);
-        return res.render("../view/edittugas", {
-          message: "Tugas berhasil diedit",
-        });
-      }
-    }
-  );
-};
+//   db.query(
+//     "UPDATE tugas SET deskripsi = ?, uploaded_file = ? WHERE tugas_id = ?",
+//     [deskripsi, uploaded_file, tugas_id],
+//     (error, result) => {
+//       if (error) {
+//         console.log(error);
+//         return res.render("../view/edittugas", {
+//           message: "Terjadi kesalahan saat mengedit tugas",
+//         });
+//       } else {
+//         console.log(result);
+//         return res.render("../view/edittugas", {
+//           message: "Tugas berhasil diedit",
+//         });
+//       }
+//     }
+//   );
+// };
 
 exports.getSubmitTugas = (req, res) => {
   const pendaftaranId = req.params.id;
@@ -125,4 +125,25 @@ exports.submitTugas = (req, res) => {
       }
     }
   );
+};
+
+exports.detailTugas = (req, res) =>  {
+  const detailId = req.params.id;
+  db.query("SELECT * FROM submission JOIN users ON submission.user_id = users.id WHERE form_id = ?",
+  [detailId],
+
+  (error, results) => {
+    if (error) {
+      console.log(error);
+      return res.json("../view/detailTugas", {
+        message: "Terjadi kesalahan saat mengambil data tugas",
+      });
+    } else {
+      console.log(results);
+      return res.render("../view/detailTugas", {
+        user: req.user,
+        data: results,
+      });
+    }
+  });
 };
