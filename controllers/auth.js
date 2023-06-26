@@ -202,9 +202,9 @@ exports.getLogin = async (req, res) => {
 };
 
 exports.dashboard = (req, res) => {
+  const userId = req.user.id;
   db.query(
-    "SELECT * FROM forms LEFT JOIN submission ON forms.form_id = submission.form_id INNER JOIN users ON submission.user_id = users.id",
-    (error, result) => {
+    "SELECT * FROM forms WHERE user_id = ?", [userId], (error, result) => {
       if (error) {
         console.log(error);
         return res.render("../view/dashboard", {
@@ -212,11 +212,11 @@ exports.dashboard = (req, res) => {
         });
       } else {
         console.log("ini datanyyy"+result);
-        // return res.render("../view/dashboard", {
-        //   user: req.user,
-        //   forms: result,
-        // });
-        return res.json(result);
+        return res.render("../view/dashboard", {
+          user: req.user,
+          data: result,
+        });
+        // return res.json(result);
       }
     }
   );
