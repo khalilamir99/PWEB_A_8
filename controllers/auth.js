@@ -201,24 +201,27 @@ exports.getLogin = async (req, res) => {
   res.render("../view/login");
 };
 
-exports.dashboard = (req, res) =>  {
-  db.query("SELECT * FROM forms OUTER JOIN submission ON forms.form_id = submission.form_id OUTER JOIN users ON submission.user_id = users.id",
-
-  (error, results) => {
-    if (error) {
-      console.log(error);
-      return res.render("../view/dashboard", {
-        message: "Terjadi kesalahan saat mengambil data tugas",
-      });
-    } else {
-      console.log(results);
-      return res.render("../view/dashboard", {
-        user: req.user,
-        data: results,
-      });
+exports.dashboard = (req, res) => {
+  db.query(
+    "SELECT * FROM forms LEFT JOIN submission ON forms.form_id = submission.form_id INNER JOIN users ON submission.user_id = users.id",
+    (error, result) => {
+      if (error) {
+        console.log(error);
+        return res.render("../view/dashboard", {
+          message: "Terjadi kesalahan saat mengambil data tugas",
+        });
+      } else {
+        console.log("ini datanyyy"+result);
+        // return res.render("../view/dashboard", {
+        //   user: req.user,
+        //   forms: result,
+        // });
+        return res.json(result);
+      }
     }
-  });
+  );
 };
+
 
 exports.getProfil = async (req, res) => {
   if (req.user) {

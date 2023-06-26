@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 23, 2023 at 12:42 PM
+-- Generation Time: Jun 26, 2023 at 02:29 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -46,7 +46,7 @@ CREATE TABLE `submission` (
   `user_id` int(11) NOT NULL,
   `form_id` int(11) NOT NULL,
   `uploaded_file` varchar(255) NOT NULL,
-  `deskripsi` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -70,8 +70,6 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES
 (4, 'Dzul Fauzi', 'dzulfauzi2@gmail.com', '$2a$08$TG6Eb6tnro.g9QuBoZNZveTlDWMHjuyNyF8IBdikWzKaR4Q4SeFIa'),
-(5, 'Famili', 'famili@gmail.com', '$2a$08$iKUZPLU.74eucWm9TyJEHeWkqiHuSTXlsADKYWbSRIf7E/HpGEaJ2'),
-(6, 'Imam', 'imam@gmail.com', '$2a$08$a178.fwMbl1VFueITDyIEuSXteLw3L3zCd80OdQxZsmghmWYcgx4S'),
 (7, 'khalil', 'khalilamir2371@gmail.com', '$2a$08$OA/ZYJwi/Ov6dksGuXD6z.FURUog1eyXu3S8eRWSlSHIG1rAdhuyq');
 
 --
@@ -106,13 +104,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `forms`
 --
 ALTER TABLE `forms`
-  MODIFY `form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables

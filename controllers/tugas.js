@@ -135,7 +135,7 @@ exports.detailTugas = (req, res) =>  {
   (error, results) => {
     if (error) {
       console.log(error);
-      return res.render("../view/detailTugas", {
+      return res.json("../view/detailTugas", {
         message: "Terjadi kesalahan saat mengambil data tugas",
       });
     } else {

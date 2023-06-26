@@ -75,20 +75,22 @@
             </div>
 
             <div class="">
+                {{#each forms}}
                 <div class="card mx-2" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title"> Judul tugas -table forms- </h5>
-                    <p class="card-text">Deskripsi -table forms- </p>
+                    <div class="card-body">
+                        <h5 class="card-title">{{this.judul}}</h5>
+                        <p class="card-text">{{this.deskripsi}}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{this.user.name}}</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="/detailTugas-{{this.form_id}}" class="card-link">Detail inputan</a>
+                    </div>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Nama user yg sudah submit </li>
-                </ul>
-                <div class="card-body">
-                    <a href="#" class="card-link">Detail inputan</a>
-                </div>
-                </div>
-
+                {{/each}}
             </div>
+
 
 
 
