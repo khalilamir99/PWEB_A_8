@@ -43,7 +43,6 @@ exports.register = (req, res) => {
           name: name,
           email: email,
           password: hashedPassword,
-          created_at: currentDate,
         },
         (error, result) => {
           if (error) {
@@ -191,7 +190,7 @@ exports.logout = async (req, res) => {
     httpOnly: true,
   });
 
-  res.status(200).redirect("/");
+  res.status(200).redirect("/auth/login");
 };
 
 exports.getRegister = async (req, res) => {
@@ -202,14 +201,23 @@ exports.getLogin = async (req, res) => {
   res.render("../view/login");
 };
 
-exports.dashboard = async (req, res) => {
-  if (req.user) {
-    res.render("../view/dashboard", {
-      user: req.user,
-    });
-  } else {
-    res.redirect("/auth/login");
-  }
+exports.dashboard = (req, res) =>  {
+  db.query("SELECT * FROM forms OUTER JOIN submission ON forms.form_id = submission.form_id OUTER JOIN users ON submission.user_id = users.id",
+
+  (error, results) => {
+    if (error) {
+      console.log(error);
+      return res.render("../view/dashboard", {
+        message: "Terjadi kesalahan saat mengambil data tugas",
+      });
+    } else {
+      console.log(results);
+      return res.render("../view/dashboard", {
+        user: req.user,
+        data: results,
+      });
+    }
+  });
 };
 
 exports.getProfil = async (req, res) => {

@@ -40,11 +40,13 @@ router.get("/hapuspendaftaran-:id", authController.isLoggedIn, formsController.h
 
 router.get("/tugas", authController.isLoggedIn, tugasController.listForm);
 
-router.get("/editTugas-:id", authController.isLoggedIn, tugasController.getEditTugas);
+// router.get("/editTugas-:id", authController.isLoggedIn, tugasController.getEditTugas);
 
-router.post("/editTugas", authController.isLoggedIn, tugasController.editTugas);
+// router.post("/editTugas", authController.isLoggedIn, tugasController.editTugas);
 
 router.get("/submitTugas-:id", authController.isLoggedIn, tugasController.getSubmitTugas);
+
+router.get("/detailTugas-:id", authController.isLoggedIn, tugasController.detailTugas);
 
 router.post("/submittugas", authController.isLoggedIn, uploadTugas.single('uploaded_file'), tugasController.submitTugas);
 
