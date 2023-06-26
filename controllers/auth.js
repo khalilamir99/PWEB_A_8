@@ -2,7 +2,9 @@ const mysql = require("mysql");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { promisify } = require("util");
-const currentDate = new Date();
+const moment = require("moment");
+const currentDate = moment().format("YYYY-MM-DD HH:mm:ss");
+
 
 const db = mysql.createConnection({
   host: process.env.DATABASE_HOST,
@@ -43,6 +45,8 @@ exports.register = (req, res) => {
           name: name,
           email: email,
           password: hashedPassword,
+          created_at: moment().format("YYYY-MM-DD HH:mm:ss"),
+          updated_at: moment().format("YYYY-MM-DD HH:mm:ss"),
         },
         (error, result) => {
           if (error) {
@@ -140,7 +144,7 @@ exports.updatePassword = async (req, res) => {
                 );
               }
             }
-          );
+          );          
         }
       }
     );
