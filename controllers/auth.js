@@ -128,8 +128,8 @@ exports.updatePassword = async (req, res) => {
           }
 
           db.query(
-            "UPDATE users SET email = ?, password = ?, updated_at = ? WHERE id = ?",
-            [email, hashedPassword, currentDate, results[0].id],
+            "UPDATE users SET email = ?, password = ?, WHERE id = ?",
+            [email, hashedPassword, results[0].id],
             (error, result) => {
               if (error) {
                 console.log(error);
@@ -202,24 +202,30 @@ exports.getLogin = async (req, res) => {
 };
 
 exports.dashboard = (req, res) => {
-  const userId = req.user.id;
-  db.query(
-    "SELECT * FROM forms WHERE user_id = ?", [userId], (error, result) => {
-      if (error) {
-        console.log(error);
-        return res.render("../view/dashboard", {
-          message: "Terjadi kesalahan saat mengambil data tugas",
-        });
-      } else {
-        console.log("ini datanyyy"+result);
-        return res.render("../view/dashboard", {
-          user: req.user,
-          data: result,
-        });
-        // return res.json(result);
+  if (req.user==undefined||null) {
+    res.redirect("/auth/login");
+    
+  } else {
+    const userId = req.user.id;
+    db.query(
+      "SELECT * FROM forms WHERE user_id = ?", [userId], (error, result) => {
+        if (error) {
+          console.log(error);
+          return res.render("../view/dashboard", {
+            message: "Terjadi kesalahan saat mengambil data tugas",
+          });
+        } else {
+          console.log(result);
+          return res.render("../view/dashboard", {
+            user: req.user,
+            data: result,
+          });
+          // return res.json(result);
+        }
       }
-    }
-  );
+    );
+  }
+ 
 };
 
 
