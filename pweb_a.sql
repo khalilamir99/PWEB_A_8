@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2023 at 03:59 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Generation Time: Jul 05, 2023 at 07:18 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -43,8 +43,9 @@ CREATE TABLE `forms` (
 INSERT INTO `forms` (`form_id`, `user_id`, `judul`, `deskripsi`, `created_at`, `updated_at`) VALUES
 (26, 4, 'Tugas APM', 'Silahkan upload file tugas anda yang berformat pdf', '2023-06-26 13:09:37', '2023-06-26 13:09:37'),
 (27, 4, 'Tugas Proses Bisnis', 'Silahkan submit tugas anda', '2023-06-26 13:10:55', '2023-06-26 13:10:55'),
-(28, 11, 'Form kepuasan terhadap jurusan', 'Silahkan submit file yang telah diisi', '2023-06-26 13:55:29', '2023-06-26 13:55:29'),
-(29, 11, 'Tugas PSE', 'Silahkan upload tugas anda', '2023-06-26 13:56:43', '2023-06-26 13:56:43');
+(29, 11, 'Tugas PSE', 'Silahkan upload tugas anda', '2023-06-26 13:56:43', '2023-06-26 13:56:43'),
+(30, 7, 'Tugas Besar Pweb', 'Upload Tugas Besar dan Tuliskan Nama dan NIM di bagian deskripsi', '2023-06-26 15:21:15', '2023-06-26 15:21:15'),
+(32, 7, 'APSI', 'Buatlah diagram usecase\r\n', '2023-06-26 15:50:10', '2023-06-26 15:50:10');
 
 -- --------------------------------------------------------
 
@@ -66,7 +67,11 @@ CREATE TABLE `submission` (
 --
 
 INSERT INTO `submission` (`user_id`, `form_id`, `uploaded_file`, `description`, `created_at`, `updated_at`) VALUES
-(4, 26, '1687785170030_579-File Utama Naskah-2417-1-10-20221004.pdf', 'nama :Dzul Fauzi\r\nnim : 2011522001', '2023-06-26 13:12:50', '2023-06-26 13:12:50');
+(4, 26, '1687785170030_579-File Utama Naskah-2417-1-10-20221004.pdf', 'nama :Dzul Fauzi\r\nnim : 2011522001', '2023-06-26 13:12:50', '2023-06-26 13:12:50'),
+(11, 30, '1687792953189_Kartu UAS.pdf', 'Imam 2011522099', '2023-06-26 15:22:33', '2023-06-26 15:22:33'),
+(9, 30, '1687793042274_Soal Praktik UAS JSI62135 - Big Data.pdf', 'Wahyu\r\n2011522088', '2023-06-26 15:24:02', '2023-06-26 15:24:02'),
+(11, 32, '1687794663356_Report Tugas 2 Khalil.pdf', 'Imam\r\n2011522089', '2023-06-26 15:51:03', '2023-06-26 15:51:03'),
+(7, 29, '1687795158278_Kartu UAS.pdf', 'Tugas pse', '2023-06-26 15:59:18', '2023-06-26 15:59:18');
 
 -- --------------------------------------------------------
 
@@ -126,7 +131,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `forms`
 --
 ALTER TABLE `forms`
-  MODIFY `form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `users`

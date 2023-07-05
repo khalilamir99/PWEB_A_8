@@ -101,7 +101,7 @@ exports.editPendaftaran = (req, res) => {
 exports.hapusData = (req, res) => {
   const id = req.params.id; // ID data yang ingin dihapus
 
-  db.query("DELETE FROM forms WHERE form_id = ?", [form_id], (error, result) => {
+  db.query("DELETE FROM forms WHERE form_id = ?", [id], (error, result) => {
     if (error) {
       console.log(error);
       return res.render("../view/pendaftaran", {
