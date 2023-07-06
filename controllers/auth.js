@@ -210,7 +210,7 @@ exports.getLogin = async (req, res) => {
 exports.dashboard = (req, res) => {
   if (req.user==undefined||null) {
     res.redirect("/auth/login");
-    
+
   } else {
     const userId = req.user.id;
     db.query(
@@ -231,7 +231,7 @@ exports.dashboard = (req, res) => {
       }
     );
   }
- 
+
 };
 
 
